@@ -25,7 +25,7 @@ interface RickMortyDao {
     @Query("SELECT * FROM character WHERE id==:requiredId")
     fun getCharacterById(requiredId: Int): LiveData<Character>
 
-    @Query("SELECT * FROM episode WHERE :requiredCharacterUrl IN(characters)")
+    @Query("SELECT * FROM episode WHERE characters LIKE '%' || :requiredCharacterUrl || '%'")
     fun getEpisodesByCharacter(requiredCharacterUrl: String): LiveData<List<Episode>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

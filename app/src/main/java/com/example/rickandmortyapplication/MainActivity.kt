@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         recyclerViewCharacters.adapter = adapter
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.loadCharacters()
+        viewModel.loadEpisodes()
         viewModel.charactersList.observe(this, Observer { charactersList -> charactersList.let {
             adapter.clear()
             adapter.charactersList = it.toMutableList()

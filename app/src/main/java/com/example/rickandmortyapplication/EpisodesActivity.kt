@@ -23,11 +23,13 @@ class EpisodesActivity : AppCompatActivity() {
         val episodeAdapter = EpisodesAdapter()
         recyclerViewEpisodes.adapter = episodeAdapter
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        viewModel.loadEpisodes()
-        viewModel.episodesList.observe(this, Observer {
+        val intent = intent
+        val url = intent.getStringExtra("url")
+        url?.let {
+            viewModel.getEpisodesByCharacter(it).observe(this, Observer {
             episodeAdapter.clear()
             episodeAdapter.episodesList = it.toMutableList()
-            Log.i("MyResult", "episodes adapter list is set and ready")
-        })
+            })
+        }
     }
 }

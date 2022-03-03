@@ -38,15 +38,13 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun loadEpisodes() {
-        val disposable = ApiFactory.apiService.getEpisodes()
-            .delaySubscription(600, TimeUnit.SECONDS)
-            .repeat()
-            .retry()
+        val disposable2 = ApiFactory.apiService.getEpisodes()
             .subscribeOn(Schedulers.io())
             .subscribe({
                 if (it.episodes!=null) {
                     for (episode in it.episodes) {
                         db.rickMortyDao.insertEpisode(episode)
+                        Log.i("MyRes", episode.toString())
                     }
                     Log.i("MyRes", "inserting episodes successful")
                 } else {Log.i("MyRes", "inserting failed, episodes = null")}
@@ -54,7 +52,8 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
                 Log.i("MyRes", "loading episodes failed: "+it.message)
                 Toast.makeText(getApplication(), "Ошибка загрузки", Toast.LENGTH_SHORT).show()
             })
-        compositeDisposable.add(disposable)
+        compositeDisposable.add(disposable2)
+        Log.i("MyRes", "end of loadEpisodes()")
     }
 
     fun getCharacterById(requiredId: Int): LiveData<Character> {
@@ -62,6 +61,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun getEpisodesByCharacter(requiredCharacterUrl: String): LiveData<List<Episode>> {
+        Log.i("MyRes", "from db: "+requiredCharacterUrl)
         return db.rickMortyDao.getEpisodesByCharacter(requiredCharacterUrl)
     }
 
