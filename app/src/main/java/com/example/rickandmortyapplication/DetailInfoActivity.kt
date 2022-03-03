@@ -1,5 +1,6 @@
 package com.example.rickandmortyapplication
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -8,6 +9,7 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.rickandmortyapplication.DATA.MainViewModel
+import com.example.rickandmortyapplication.POJO.Character
 import com.squareup.picasso.Picasso
 
 class DetailInfoActivity : AppCompatActivity() {
@@ -20,6 +22,7 @@ class DetailInfoActivity : AppCompatActivity() {
     private lateinit var buttonToEpisodes: Button
     private lateinit var imageViewImage: ImageView
     private var id: Int? = null
+    private lateinit var character: Character
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +39,7 @@ class DetailInfoActivity : AppCompatActivity() {
         id?.let {
             viewModel.getCharacterById(it).observe(this, Observer {
                 Picasso.get().load(it.image).into(imageViewImage)
+                character = it
                 textViewLocation.text = it.location?.name
                 textViewName.text = it.name
                 textViewSpecies.text = it.species
@@ -45,7 +49,9 @@ class DetailInfoActivity : AppCompatActivity() {
             })
         }
         buttonToEpisodes.setOnClickListener {
-
+            val intent2 = Intent(this, EpisodesActivity::class.java)
+            intent2.putExtra("url", character.url)
+            startActivity(intent2)
         }
 
 

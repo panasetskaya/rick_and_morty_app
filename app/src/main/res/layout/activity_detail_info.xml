@@ -8,7 +8,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="8dp">
 
         <Button
             android:id="@+id/buttonToEpisodes"
@@ -20,10 +21,9 @@
 
         <ImageView
             android:id="@+id/imageViewCharacterImageBig"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/buttonToEpisodes"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:contentDescription="@string/character_image_description"
             tools:srcCompat="@tools:sample/avatars"
@@ -31,24 +31,26 @@
 
         <TextView
             android:id="@+id/textViewCharacterNameBig"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25sp"
             android:textStyle="bold|italic"
             android:gravity="center"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageViewCharacterImageBig"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewCharacterImageBig" />
+            app:layout_constraintTop_toTopOf="@+id/imageViewCharacterImageBig"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewCharacterImageBig" />
 
         <TextView
             android:id="@+id/textViewLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            android:gravity="center"
+            android:gravity="left"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCharacterNameBig"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewCharacterImageBig"
+            android:padding="8dp"
             />
 
         <TextView
@@ -56,10 +58,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            android:gravity="center"
+            android:gravity="left"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewLocation"
+            android:padding="8dp"
             />
 
         <TextView
@@ -67,10 +70,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            android:gravity="center"
+            android:gravity="left"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewSpecies"
+            android:padding="8dp"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
