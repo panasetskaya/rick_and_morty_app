@@ -2,6 +2,7 @@ package com.example.rickandmortyapplication.POJO
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.squareup.moshi.Json
 
 @Entity

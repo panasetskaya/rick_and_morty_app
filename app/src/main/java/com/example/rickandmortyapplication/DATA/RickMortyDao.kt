@@ -28,9 +28,9 @@ interface RickMortyDao {
     @Query("SELECT * FROM episode WHERE :requiredCharacterUrl IN(characters)")
     fun getEpisodesByCharacter(requiredCharacterUrl: String): LiveData<List<Episode>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCharacter(character: Character)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertEpisode(episode: Episode)
 }

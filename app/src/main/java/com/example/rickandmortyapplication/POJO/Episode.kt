@@ -9,17 +9,17 @@ data class Episode (
 
     @PrimaryKey
     @Json(name = "id")
-    private val id: Int? = null,
+    val id: Int? = null,
 
     @Json(name = "name")
-    private val name: String? = null,
+    val name: String? = null,
 
     @Json(name = "air_date")
-    private val airDate: String? = null,
+    val airDate: String? = null,
 
     @Json(name = "episode")
-    private val episode: String? = null,
+    val episode: String? = null,
 
     @Json(name = "characters")
-    private val characters: List<String>? = null
+    val characters: List<String>? = null
 )

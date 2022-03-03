@@ -4,5 +4,5 @@ import com.squareup.moshi.Json
 
 data class Location (
     @Json(name = "name")
-    private val name: String? = null
+    val name: String? = null
 )

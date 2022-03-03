@@ -1,9 +1,14 @@
 package com.example.rickandmortyapplication
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.rickandmortyapplication.ADAPTERS.CharactersAdapter
 import com.example.rickandmortyapplication.API.ApiFactory
 import com.example.rickandmortyapplication.DATA.MainViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -12,38 +17,27 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity() {
 
-    private val compositeDisposable = CompositeDisposable()
     private lateinit var viewModel: MainViewModel
+    private lateinit var recyclerViewCharacters: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        recyclerViewCharacters = findViewById(R.id.recyclerCharacters)
+        recyclerViewCharacters.layoutManager = LinearLayoutManager(this)
+        val adapter = CharactersAdapter()
+        recyclerViewCharacters.adapter = adapter
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-
-        val disposable = ApiFactory.apiService.getCharacters()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                Log.i("MyRes", "loading succeful: "+it.characters.toString())
-            }, {
-                Log.i("MyRes", "loading failed: "+it.message)
-            })
-        val disposable2 = ApiFactory.apiService.getEpisodes()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                Log.i("MyRes", "loading succeful: "+it.episodes.toString())
-            }, {
-                Log.i("MyRes", "loading failed: "+it.message)
-            })
-        compositeDisposable.add(disposable)
-        compositeDisposable.add(disposable2)
-
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.dispose()
+        viewModel.loadCharacters()
+        viewModel.charactersList.observe(this, Observer { charactersList -> charactersList.let {
+            adapter.clear()
+            adapter.charactersList = it.toMutableList()
+            Log.i("MyResult", "adapter list is set and ready") }
+        })
+        adapter.onCharacterClick = {
+            val intent = Intent(this,DetailInfoActivity::class.java)
+            intent.putExtra("id", it.id)
+            startActivity(intent)
+        }
     }
 }

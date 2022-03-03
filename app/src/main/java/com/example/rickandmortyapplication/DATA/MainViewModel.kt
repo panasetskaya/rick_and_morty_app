@@ -2,14 +2,12 @@ package com.example.rickandmortyapplication.DATA
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import com.example.rickandmortyapplication.API.ApiFactory
 import com.example.rickandmortyapplication.POJO.Character
 import com.example.rickandmortyapplication.POJO.Episode
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
@@ -34,6 +32,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
                 } else {Log.i("MyRes", "inserting failed, characters = null")}
             }, {
                 Log.i("MyRes", "loading characters failed: "+it.message)
+                Toast.makeText(getApplication(), "Ошибка загрузки", Toast.LENGTH_SHORT).show()
             })
         compositeDisposable.add(disposable)
     }
