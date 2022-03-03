@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.charactersList.observe(this, Observer { charactersList -> charactersList.let {
             adapter.clear()
             adapter.charactersList = it.toMutableList()
-            Log.i("MyResult", "adapter list is set and ready") }
+            Log.i("MyResult", "character adapter list is set and ready") }
         })
         adapter.onCharacterClick = {
             val intent = Intent(this,DetailInfoActivity::class.java)

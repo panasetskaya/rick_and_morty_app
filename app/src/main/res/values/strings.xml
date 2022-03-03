@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Rick and Morty Application</string>
     <string name="character_image_description">Изображение персонажа</string>
+    <string name="to_episodes">"К эпизодам с"</string>
 </resources>

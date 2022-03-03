@@ -52,6 +52,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
                 } else {Log.i("MyRes", "inserting failed, episodes = null")}
             }, {
                 Log.i("MyRes", "loading episodes failed: "+it.message)
+                Toast.makeText(getApplication(), "Ошибка загрузки", Toast.LENGTH_SHORT).show()
             })
         compositeDisposable.add(disposable)
     }
