@@ -1,23 +1,29 @@
 package com.example.rickandmortyapplication.API
 
+import com.example.rickandmortyapplication.POJO.Example
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Query
 
-object ApiFactory {
-    private const val BASE_URL = "https://rickandmortyapi.com/api/"
+interface ApiFactory {
 
-    val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
+    companion object {
+        private const val BASE_URL = "https://rickandmortyapi.com/api/"
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-        .build()
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
 
-    val apiService = retrofit.create(ApiService::class.java)
+        private val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+            .build()
+
+        val apiService = retrofit.create(ApiService::class.java)
+    }
 }

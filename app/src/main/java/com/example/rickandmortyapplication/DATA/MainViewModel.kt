@@ -10,15 +10,16 @@ import com.example.rickandmortyapplication.POJO.Character
 import com.example.rickandmortyapplication.POJO.Episode
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
+
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
 
     private val db = RickMortyDatabase.getInstance(application)
-    private val compositeDisposable = CompositeDisposable()
+    val compositeDisposable = CompositeDisposable()
 
     val charactersList = db.rickMortyDao.getAllCharacters()
     val episodesList = db.rickMortyDao.getAllEpisodes()
+
 
     fun loadCharacters() {
         val disposable = ApiFactory.apiService.getCharacters()
