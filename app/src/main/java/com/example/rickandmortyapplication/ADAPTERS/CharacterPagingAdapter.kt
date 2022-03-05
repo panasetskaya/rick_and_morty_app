@@ -15,7 +15,11 @@ import com.squareup.picasso.Picasso
 
 class CharacterPagingAdapter: PagingDataAdapter<Character, CharacterPagingAdapter.CharacterViewHolder>(COMPARATOR) {
 
+
+    var onCharacterClick: ((Character) -> Unit)? = null
+
     class CharacterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+
 
         companion object {
             fun getInstance(parent: ViewGroup): CharacterViewHolder {
@@ -28,6 +32,8 @@ class CharacterPagingAdapter: PagingDataAdapter<Character, CharacterPagingAdapte
 
         var textViewCharacterName: TextView = itemView.findViewById(R.id.textViewCharacterName)
         var imageViewCharacterImage: ImageView = itemView.findViewById(R.id.imageViewCharacterImage)
+
+        val thisItemView = itemView
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
@@ -35,6 +41,8 @@ class CharacterPagingAdapter: PagingDataAdapter<Character, CharacterPagingAdapte
             holder.textViewCharacterName.text = it.name
             Log.i("MyRes", "character name:"+ it.name)
             Picasso.get().load(it.image).into(holder.imageViewCharacterImage)
+            val thisItem = it
+            holder.thisItemView.setOnClickListener { onCharacterClick?.invoke(thisItem) }
         }
     }
 

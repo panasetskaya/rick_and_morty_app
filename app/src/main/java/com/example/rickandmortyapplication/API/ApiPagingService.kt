@@ -1,6 +1,7 @@
 package com.example.rickandmortyapplication.API
 
 import com.example.rickandmortyapplication.POJO.Character
+import com.example.rickandmortyapplication.POJO.EpisodeExample
 import com.example.rickandmortyapplication.POJO.Example
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -18,6 +19,11 @@ interface ApiPagingService {
     suspend fun getPagingCharactersExample(
         @Query("page") page: Int
     ): Example
+
+    @GET("episode")
+    suspend fun getPagingEpisodeExample(
+        @Query("page") page: Int
+    ): EpisodeExample
 
     companion object {
 

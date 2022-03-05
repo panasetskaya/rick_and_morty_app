@@ -41,6 +41,11 @@ class MainActivity : AppCompatActivity() {
         Log.i("MyRes", "adapter item  count ${pagingAdapter.itemCount}")
         recyclerViewCharacters.adapter = pagingAdapter
 
+        pagingAdapter.onCharacterClick = {
+            val intent = Intent(this,DetailInfoActivity::class.java)
+            intent.putExtra("id", it.id)
+            startActivity(intent)
+        }
 
 
         lifecycleScope.launch {
