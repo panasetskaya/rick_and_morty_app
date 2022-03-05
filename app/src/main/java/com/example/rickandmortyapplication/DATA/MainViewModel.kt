@@ -22,7 +22,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
 
     fun loadCharacters() {
-        val disposable = ApiFactory.apiService.getCharacters()
+        val disposable = ApiFactory.apiService.getCharacters(1)
             .subscribeOn(Schedulers.io())
             .subscribe({
                 if (it.characters!=null) {

@@ -7,11 +7,12 @@ import com.example.rickandmortyapplication.POJO.Example
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface ApiService {
 
     @GET("character")
-    fun getCharacters(): Single<Example>
+    fun getCharacters(@Query("page") page: Int): Single<Example>
 
     @GET("episode")
     fun getEpisodes(): Single<EpisodeExample>

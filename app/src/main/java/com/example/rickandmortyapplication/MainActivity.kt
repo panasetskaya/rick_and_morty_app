@@ -1,5 +1,6 @@
 package com.example.rickandmortyapplication
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -37,10 +38,16 @@ class MainActivity : AppCompatActivity() {
         recyclerViewCharacters.layoutManager = LinearLayoutManager(this)
         rickMortyViewModel = ViewModelProvider(this)[RickMortyViewModel::class.java]
         pagingAdapter = CharacterPagingAdapter()
+        Log.i("MyRes", "adapter item  count ${pagingAdapter.itemCount}")
         recyclerViewCharacters.adapter = pagingAdapter
+
+
+
         lifecycleScope.launch {
             rickMortyViewModel.getCharacters().distinctUntilChanged().collectLatest {
+                Log.i("MyRes", "data submitting")
                 pagingAdapter.submitData(it)
+                Log.i("MyRes", "data submitted")
             }
         }
 
