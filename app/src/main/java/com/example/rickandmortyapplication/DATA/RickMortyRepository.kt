@@ -16,6 +16,13 @@ class RickMortyRepository(val context: Context) {
         )
     ).flow
 
+    fun searchForEpisodes(url: String) = Pager(
+        pagingSourceFactory = { EpisodePagingSource(apiService, context, url) },
+        config = PagingConfig(
+            pageSize = 20
+        )
+    ).flow
+
     companion object {
         //get repository instance
         fun getInstance(context: Context) = RickMortyRepository(context)

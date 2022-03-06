@@ -1,12 +1,9 @@
 package com.example.rickandmortyapplication.API
 
-import com.example.rickandmortyapplication.POJO.Character
 import com.example.rickandmortyapplication.POJO.EpisodeExample
 import com.example.rickandmortyapplication.POJO.Example
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory

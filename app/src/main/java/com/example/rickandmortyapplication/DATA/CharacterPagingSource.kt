@@ -2,22 +2,16 @@ package com.example.rickandmortyapplication.DATA
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.rickandmortyapplication.API.ApiFactory
 import com.example.rickandmortyapplication.API.ApiPagingService
 import com.example.rickandmortyapplication.POJO.Character
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
 private const val STARTING_PAGE_INDEX = 1
-const val NETWORK_PAGE_SIZE = 20
 
 class CharacterPagingSource(private val api: ApiPagingService, val context: Context): PagingSource<Int, Character>()  {
 
@@ -46,16 +40,13 @@ class CharacterPagingSource(private val api: ApiPagingService, val context: Cont
             val nextKey =
                 if (result.isEmpty()) {
                     null
-                } else {
-                    // By default, initial load size = 3 * NETWORK PAGE SIZE
-                    // ensure we're not requesting duplicating items at the 2nd request
-                    pageIndex + (params.loadSize / NETWORK_PAGE_SIZE)
-                }
+                } else { pageIndex+1 }
             LoadResult.Page(
                 data = result,
-                prevKey = if (pageIndex == STARTING_PAGE_INDEX) null else pageIndex,
+                prevKey = if (pageIndex == STARTING_PAGE_INDEX) null else pageIndex-1,
                 nextKey = nextKey
             )
+
         } catch (exception: IOException) {
             Log.i("MyRes", "IOException here")
             return LoadResult.Error(exception)
