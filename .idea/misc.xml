@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="app/src/main/res/layout/character_item.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/episode_item.xml" value="0.21302083333333333" />
+        <entry key="app/src/main/res/layout/loading_state_item.xml" value="0.33" />
       </map>
     </option>
   </component>

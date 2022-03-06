@@ -2,4 +2,8 @@
     <string name="app_name">Rick and Morty Application</string>
     <string name="character_image_description">Изображение персонажа</string>
     <string name="to_episodes">"К эпизодам с"</string>
+    <string name="loading_failed">Не получилось загрузить:(</string>
+    <string name="one_more_time">Еще раз</string>
+    <string name="one_more">Еще раз</string>
+    <string name="ef">eferlkf</string>
 </resources>

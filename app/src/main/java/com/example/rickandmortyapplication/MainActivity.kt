@@ -3,42 +3,62 @@ package com.example.rickandmortyapplication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadStateAdapter
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rickandmortyapplication.ADAPTERS.CharactersAdapter
-import com.example.rickandmortyapplication.API.ApiFactory
-import com.example.rickandmortyapplication.DATA.MainViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import com.example.rickandmortyapplication.ADAPTERS.CharacterPagingAdapter
+import com.example.rickandmortyapplication.ADAPTERS.CharactersLoadStateAdapter
+import com.example.rickandmortyapplication.DATA.RickMortyViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
+
+fun <T : Any, V : RecyclerView.ViewHolder> PagingDataAdapter<T, V>.withLoadStateAdapters(
+    header: LoadStateAdapter<*>,
+    footer: LoadStateAdapter<*>
+): ConcatAdapter {
+    addLoadStateListener { loadStates ->
+        header.loadState = loadStates.refresh
+        footer.loadState = loadStates.append
+    }
+
+    return ConcatAdapter(header, this, footer)
+}
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainViewModel
     private lateinit var recyclerViewCharacters: RecyclerView
+    private lateinit var rickMortyViewModel: RickMortyViewModel
+    private lateinit var pagingAdapter: CharacterPagingAdapter
+    private lateinit var loadStateAdapter: CharactersLoadStateAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         recyclerViewCharacters = findViewById(R.id.recyclerCharacters)
         recyclerViewCharacters.layoutManager = LinearLayoutManager(this)
-        val adapter = CharactersAdapter()
-        recyclerViewCharacters.adapter = adapter
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        viewModel.loadCharacters()
-        viewModel.loadEpisodes()
-        viewModel.charactersList.observe(this, Observer { charactersList -> charactersList.let {
-            adapter.clear()
-            adapter.charactersList = it.toMutableList()
-            Log.i("MyResult", "character adapter list is set and ready") }
-        })
-        adapter.onCharacterClick = {
+        rickMortyViewModel = ViewModelProvider(this)[RickMortyViewModel::class.java]
+        pagingAdapter = CharacterPagingAdapter()
+        recyclerViewCharacters.adapter = pagingAdapter.withLoadStateAdapters(
+            header = CharactersLoadStateAdapter(pagingAdapter),
+            footer = CharactersLoadStateAdapter(pagingAdapter))
+
+        pagingAdapter.onCharacterClick = {
             val intent = Intent(this,DetailInfoActivity::class.java)
             intent.putExtra("id", it.id)
             startActivity(intent)
+        }
+
+        lifecycleScope.launch {
+            rickMortyViewModel.getCharacters().distinctUntilChanged().collectLatest {
+                pagingAdapter.submitData(it)
+            }
         }
     }
 }

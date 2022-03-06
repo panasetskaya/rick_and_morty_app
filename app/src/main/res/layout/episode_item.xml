@@ -17,6 +17,7 @@
             android:layout_height="80dp"
             android:textSize="25sp"
             android:gravity="center"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline25"
@@ -33,9 +34,10 @@
             android:id="@+id/textViewEpisodeName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textSize="35sp"
-            android:textStyle="bold|italic"
+            android:layout_marginStart="20dp"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline25"
             app:layout_constraintTop_toTopOf="parent" />
@@ -45,10 +47,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="25sp"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline25"
             app:layout_constraintTop_toBottomOf="@+id/textViewEpisodeName"
-            android:padding="8dp"/>
+            app:layout_constraintBottom_toBottomOf="@+id/textViewEpisodeNumber"
+            android:layout_marginStart="20dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
